@@ -9,9 +9,33 @@ class Todo {
   }
 
   #setEventListeners(obj) {
-    obj.addEventListener("click", () => {
-      this.#todoElement.remove();
-    });
+    if(obj instanceof HTMLElement) {
+        if(obj.tagName==="BUTTON") {
+            obj.addEventListener("click", () => {
+                this.#todoElement.remove();
+            });
+        } else if (obj.tagName === "INPUT" && obj.type==="checkbox") {
+                obj.addEventListener("change", () => {
+                    this.#data.completed = !this.#data.completed;
+            });
+        } else {
+            console.log(`${obj} is not a button nor a checkbox`);
+        }
+    } else {
+        console.log(`${obj} not a valid HTML element`);
+    }    
+  }
+
+  #generateCheckboxElement() {
+    const todoCheckboxEl = this.#todoElement.querySelector(".todo__completed");
+    const todoLabel = this.#todoElement.querySelector(".todo__label");
+    
+    todoCheckboxEl.checked = this.#data.completed;
+    
+    // Apply id and for attributes.
+    // The id will initially be undefined for new todos.
+    todoCheckboxEl.id = `todo-${this.#data.id}`;
+    todoLabel.setAttribute("for", `todo-${this.#data.id}`);
   }
 
   getView() {
@@ -19,19 +43,11 @@ class Todo {
       .querySelector(".todo")
       .cloneNode(true);
     const todoNameEl = this.#todoElement.querySelector(".todo__name");
-    const todoCheckboxEl = this.#todoElement.querySelector(".todo__completed");
-    const todoLabel = this.#todoElement.querySelector(".todo__label");
     const todoDate = this.#todoElement.querySelector(".todo__date");
     const todoDeleteBtn = this.#todoElement.querySelector(".todo__delete-btn");
 
     todoNameEl.textContent = this.#data.name;
-    todoCheckboxEl.checked = this.#data.completed;
-
-    // Apply id and for attributes.
-    // The id will initially be undefined for new todos.
-    todoCheckboxEl.id = `todo-${this.#data.id}`;
-    todoLabel.setAttribute("for", `todo-${this.#data.id}`);
-
+    
     // If a due date has been set, parsing this it with `new Date` will return a
     // number. If so, we display a string version of the due date in the todo.
     const dueDate = new Date(this.#data.date);
@@ -43,6 +59,7 @@ class Todo {
       })}`;
     }
 
+    this.#generateCheckboxElement();
     this.#setEventListeners(todoDeleteBtn);
 
     return this.#todoElement;
