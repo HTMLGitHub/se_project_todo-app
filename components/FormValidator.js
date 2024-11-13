@@ -3,6 +3,7 @@ export default class FormValidator {
     #formElement;
     #inputList;
     #buttonElement;
+    #event;
 
     constructor(settings, formElement) {
         this.#settings = settings;
@@ -37,11 +38,9 @@ export default class FormValidator {
 
     #setEventListeners() {
         this.#inputList = Array.from(
-            this.#formElement.querySelectorAll(this.#settings.inputSelector),
+            this.#formElement.querySelectorAll(this.#settings.inputSelector)
           );
-          this.#buttonElement = this.#formElement.querySelector(
-            this.#settings.submitButtonSelector,
-          );
+          this.#buttonElement = this.#formElement.querySelector(this.#settings.submitButtonSelector);
         
           this.#toggleButtonState();
         
@@ -53,8 +52,19 @@ export default class FormValidator {
           });
     }
 
+    resetValidation() {
+        //Clear the input boxes
+        this.#inputList.forEach((input) => {
+            input.value = "";
+        });
+        
+        // resets the 'submit' button to disabled
+        this.#toggleButtonState();
+    }
+
     enableValidation() {
         this.#formElement.addEventListener("submit", (evt) => {
+            this.#event = evt;
             evt.preventDefault();
         });
 
