@@ -1,17 +1,18 @@
 # Simple Todo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+This is a simple ToDo application. 
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+Current functionality: displays functions, can 'check' when done, and delete the ToDo.
+This will also pop up a modal to add a new todo. 
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+This is an HTML/CSS/JS page. Used classes to optimize the js page. Also used modular js calls in html to export and import needed functionality
 
 ## Deployment
 
 This project is deployed on GitHub Pages:
 
-- ADD LINK HERE
+[- ADD LINK HERE](https://htmlgithub.github.io/se_project_todo-app/)
