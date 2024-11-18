@@ -2,21 +2,29 @@ export default class Todo {
   #data;
   #templateElement;
   #todoElement;
+  #handleChecked;
+  #handleDeleted;
 
-  constructor(data, selector) {
+  constructor(data, selector, handleChecked, handleDeleted) {
     this.#data = data;
     this.#templateElement = document.querySelector(selector);
+    this.#handleChecked = handleChecked;
+    this.#handleDeleted = handleDeleted;
   }
 
   #setEventListeners(obj) {
     if (obj instanceof HTMLElement) {
       if (obj.tagName === "BUTTON") {
         obj.addEventListener("click", () => {
+          const wasCompleted = this.#data.completed;
           this.#todoElement.remove();
+          this.#handleDeleted(wasCompleted);
         });
       } else if (obj.tagName === "INPUT" && obj.type === "checkbox") {
         obj.addEventListener("change", () => {
+          console.log("Changing...");
           this.#data.completed = !this.#data.completed;
+          this.#handleChecked(this.#data.completed);
         });
       } else {
         console.log(`${obj} is not a button nor a checkbox`);
@@ -36,6 +44,8 @@ export default class Todo {
     // The id will initially be undefined for new todos.
     todoCheckboxEl.id = `todo-${this.#data.id}`;
     todoLabel.setAttribute("for", `todo-${this.#data.id}`);
+
+    this.#setEventListeners(todoCheckboxEl);
   }
 
   getView() {
