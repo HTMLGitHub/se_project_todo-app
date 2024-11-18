@@ -1,6 +1,11 @@
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 
-import { initialTodos, validationConfig, addTodoButton, addTodoForm } from "../utils/constants.js";
+import {
+  initialTodos,
+  validationConfig,
+  addTodoButton,
+  addTodoForm,
+} from "../utils/constants.js";
 import FormValidator from "../components/FormValidator.js";
 import Todo from "../components/Todo.js";
 import TodoCounter from "../components/TodoCounter.js";
@@ -66,7 +71,7 @@ function handleChecked(completed) {
 function handleDeleted(completed) {
   todoCounter.updateTotal(false);
 
-  if(completed) todoCounter.updateCompleted(false);
+  if (completed) todoCounter.updateCompleted(false);
 }
 
 // The logic in this function should all be handled in the Todo class.
