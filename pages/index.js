@@ -9,7 +9,7 @@ import {
 import FormValidator from "../components/FormValidator.js";
 import Todo from "../components/Todo.js";
 import TodoCounter from "../components/TodoCounter.js";
-import Section from "../components/section.js";
+import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
 const todoCounter = new TodoCounter(initialTodos, ".counter__text");
@@ -29,7 +29,7 @@ const toDoPopup = new PopupWithForm({
     const newTodo = { id, name: task, date };
 
     // Add the new todo to the section and render it
-    newTodos.addItem(generateTodo(newTodo));
+    section.addItem(generateTodo(newTodo));
 
     // increment the total count
     todoCounter.updateTotal(true);
@@ -40,25 +40,13 @@ const toDoPopup = new PopupWithForm({
   },
 });
 
-const newTodos = new Section({
-  // Pass TODO
-  items: [],
-
-  renderer: (item) => {
-    const todo = generateTodo(item);
-    newTodos.addItem(todo);
-  },
-
-  containerSelector: ".todos__list",
-});
-
-const oldTodos = new Section({
+const section = new Section({
   // Pass initial TODOs
   items: initialTodos,
 
   renderer: (item) => {
     const todo = generateTodo(item);
-    oldTodos.addItem(todo);
+    section.addItem(todo);
   },
 
   containerSelector: ".todos__list",
@@ -84,10 +72,9 @@ const generateTodo = (data) => {
 
 addTodoButton.addEventListener("click", () => {
   toDoPopup.toggleModal("add");
-  toDoPopup.setEventListeners();
 });
 
-oldTodos.renderItems();
-
+section.renderItems();
+toDoPopup.setEventListeners();
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();

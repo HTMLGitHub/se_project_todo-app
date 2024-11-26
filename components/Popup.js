@@ -22,7 +22,7 @@ export default class Popup {
 
   #handleEscapeClose = (evt) => {
     if (evt.key === "Escape") {
-      const openPopup = this.#popupElement.querySelector(".popup_visible")
+      const openPopup = this.#popupElement
         ? "True"
         : "False";
 
@@ -38,10 +38,8 @@ export default class Popup {
       this.toggleModal();
     });
 
-    document.querySelectorAll(".popup").forEach((popup) => {
-      popup.addEventListener("click", (evt) => {
-        if (evt.target === popup) this.toggleModal();
+  this.#popupElement.addEventListener("click", (evt) => {
+        if (evt.target === this.#popupElement) this.toggleModal();
       });
-    });
   }
 }

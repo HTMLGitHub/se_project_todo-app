@@ -29,8 +29,6 @@ export default class TodoCounter {
         */
     this.#completed += increment ? 1 : -1;
 
-    console.log(this.#completed);
-
     this.#updateText();
   };
 
@@ -41,8 +39,6 @@ export default class TodoCounter {
     // text content.
 
     this.#total += increment ? 1 : -1;
-
-    console.log(this.#total);
 
     this.#updateText();
   };
